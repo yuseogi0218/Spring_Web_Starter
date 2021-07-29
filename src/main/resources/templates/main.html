@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style>
+        body {
+            background: aliceblue;
+            margin: 0 auto;
+            width: 600px;
+        }
+        #container {
+            text-align: center;
+            background: white;
+            width: 600px;
+            height: 300px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 2px 2px gray;
+            padding-top: 10px;
+            margin-top: 60px;
+        }
+        button {
+            height: 70px;
+            width: 150px;
+            margin : 15px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1 th:text="'!! Welcome ' +${user_name} + '!!'">!! Welcome !!</h1>
+    <div>
+        <button>
+            회원 정보 수정
+        </button>
+        <button type = "button" onclick="location.href='/'">
+            로그 아웃
+        </button>
+        <button type="button" id="signOut">
+            회원 탈퇴
+        </button>
+    </div>
+</div>
+</body>
+</html>
