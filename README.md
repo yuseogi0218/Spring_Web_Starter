@@ -1,5 +1,6 @@
 # Spring_Web_Starter
 My First Spring Web Project
+
 2021.07 -
 
 ___
@@ -11,11 +12,17 @@ ___
 
 ___
 - ### 프로젝트 개요<a id="outline"></a> 
-  - 하게 된 이유.
-  - 의존성 설명
+  - Spring Framework를 이용하여 제작할 첫번째 개인 웹 프로젝트
+  - 의존성
+    - Spring Boot DevTools
+    - SpringWeb
+    - Thymeleaf 템플릿 엔진
+    - Spring Data JPA 
 ___
 - ### 요구사항<a id="requirements"></a>
-  - 각 도메인 별 → 기능 별 간단히 설명 
+  - Client
+    - 회원 정보
+      - 회원가입 / 로그인 / 회원 정보 수정 / 회원 탈퇴
 ___
 - ### 프로젝트 구조 <a id="structure"></a> 
   - 클래스 다이어그램 추가
