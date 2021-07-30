@@ -32,11 +32,7 @@ public class JpaMemberRepository implements MemberRepository{
 
     @Override
     public String login(String user_id, String user_pass) {
-        List<Member> result = em.createQuery("select m from Member m where m.user_id = :user_id", Member.class)
-                .setParameter("user_id", user_id)
-                .getResultList();
-
-        Optional<Member> member = result.stream().findAny();
+        Optional<Member> member = findById(user_id);
 
         if (member.isPresent()) {
             Member result_member = member.get();
@@ -49,6 +45,14 @@ public class JpaMemberRepository implements MemberRepository{
             return "null";
         }
 
+    }
+
+    @Override
+    public String signOut(String user_id) {
+        em.createQuery("delete from Member m where m.user_id = :user_id")
+                .setParameter("user_id", user_id)
+                .executeUpdate();
+        return user_id;
     }
 
 }

@@ -4,13 +4,11 @@ import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Member;
 import spring_web.starter.repository.MemberRepository;
 
-import java.util.Optional;
 
 @Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -31,5 +29,9 @@ public class MemberService {
 
     public String login(String user_id, String user_pass) {
         return memberRepository.login(user_id, user_pass);
+    }
+
+    public String signOut(String user_id) {
+        return memberRepository.signOut(user_id);
     }
 }

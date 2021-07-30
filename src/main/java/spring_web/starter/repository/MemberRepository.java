@@ -11,4 +11,6 @@ public interface MemberRepository {
     Optional<Member> findById(String user_id);
 
     String login(String user_id, String user_pass);
+
+    String signOut(String user_id);
 }

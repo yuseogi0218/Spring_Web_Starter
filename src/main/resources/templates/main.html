@@ -28,6 +28,30 @@
             margin-top: 60px;
         }
     </style>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var btn = function(user_id,user_pass) {
+            var get_pass = prompt("삭제 확인을 위해" + user_id+"의 비밀번호를 입력해 주세요.");
+            if (get_pass == user_pass) {
+                var form = document.createElement('form');
+                form.setAttribute('method','post') //POST 메서드 적용
+                form.setAttribute('action', '/delete');
+                document.charset = "utf-8";
+                var hiddenField = document.createElement('input');
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute('name', 'user_id');
+                hiddenField.setAttribute('value', user_id);
+                form.appendChild(hiddenField);
+                document.body.appendChild(form);
+                form.submit();
+                alert("삭제 완료!");
+
+            } else {
+                alert("비밀번호가 일치 하지 않습니다.")
+            }
+        }
+        /*]]>*/
+    </script>
 </head>
 <body>
 <div id="container">
@@ -39,7 +63,7 @@
         <button type = "button" onclick="location.href='/'">
             로그 아웃
         </button>
-        <button type="button" id="signOut">
+        <button type = "button" th:onclick="javascript:btn([[${user_id}]],[[${user_pass}]])">
             회원 탈퇴
         </button>
     </div>
