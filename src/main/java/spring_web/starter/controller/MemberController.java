@@ -41,6 +41,7 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public String signUp(MemberForm form, RedirectAttributes redirectAttributes, Model model) {
+        System.out.println(form.getUser_id());
         if (!(form.getUser_pass()).equals(form.getPass_chk())) {
             redirectAttributes.addFlashAttribute("errorMessage", "pass_error");
             return "redirect:/signUp";
