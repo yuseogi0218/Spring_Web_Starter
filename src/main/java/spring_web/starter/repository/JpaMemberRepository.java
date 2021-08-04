@@ -1,6 +1,7 @@
 package spring_web.starter.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Member;
 
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ public class JpaMemberRepository implements MemberRepository{
         this.em = em;
     }
 
+    @Transactional
     @Override
     public Member signUp(Member member) {
         em.persist(member);

@@ -1,0 +1,50 @@
+package spring_web.starter.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import spring_web.starter.domain.Post;
+import spring_web.starter.service.PostService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Controller
+public class PostController {
+
+    private final PostService postService;
+
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+
+    @GetMapping("/write")
+    public String writeForm() {
+        return "post/writeForm";
+    }
+
+    @PostMapping("/write")
+    public String write(PostForm postForm, HttpServletRequest req) {
+        Post post = new Post();
+
+        Date today = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = dateFormat.format(today);
+
+        HttpSession session = req.getSession();
+
+        post.setUser_id(session.getAttribute("user_id").toString());
+        post.setTitle(postForm.getTitle());
+        post.setBody(postForm.getBody());
+        post.setDate(date);
+        post.setView(postForm.getView());
+
+        postService.write(post);
+        return "/main";
+    }
+}

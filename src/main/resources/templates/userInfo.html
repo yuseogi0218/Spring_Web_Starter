@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style>
+        body {
+            background: aliceblue;
+            margin: 0 auto;
+            width: 600px;
+        }
+        #container {
+            text-align: center;
+            background: white;
+            width: 600px;
+            height: 300px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 2px 2px gray;
+            padding-top: 10px;
+            margin-top: 60px;
+        }
+        button {
+            height: 70px;
+            width: 150px;
+            margin : 15px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 60px;
+        }
+    </style>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var btn = function(user_id,user_pass) {
+            var get_pass = prompt("삭제 확인을 위해" + user_id+"의 비밀번호를 입력해 주세요.");
+            if (get_pass == user_pass) {
+                var form = document.createElement('form');
+                form.setAttribute('method','post') //POST 메서드 적용
+                form.setAttribute('action', '/delete');
+                document.charset = "utf-8";
+                var hiddenField = document.createElement('input');
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute('name', 'user_id');
+                hiddenField.setAttribute('value', user_id);
+                form.appendChild(hiddenField);
+                document.body.appendChild(form);
+                form.submit();
+                alert("삭제 완료!");
+
+            } else {
+                alert("비밀번호가 일치 하지 않습니다.")
+            }
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div id="container">
+    <h1 th:text="'!! Welcome ' +${session.user_name} + '!!'">!! Welcome !!</h1>
+    <div>
+        <button>
+            회원 정보 수정
+        </button>
+        <button type = "button" onclick="location.href='/main'">
+            게시글
+        </button>
+        <button type = "button" th:onclick="javascript:btn([[${session.user_id}]],[[${session.user_pass}]])">
+            회원 탈퇴
+        </button>
+    </div>
+</div>
+</body>
+</html>

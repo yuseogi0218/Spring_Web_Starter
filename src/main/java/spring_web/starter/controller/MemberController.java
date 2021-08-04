@@ -9,6 +9,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring_web.starter.domain.Member;
 import spring_web.starter.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class MemberController {
 
@@ -21,17 +24,26 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(MemberForm form, Model model, RedirectAttributes redirectAttributes) {
+    public String login(MemberForm form, RedirectAttributes redirectAttributes, HttpServletRequest req) throws Exception {
         String result = memberService.login(form.getUser_id(), form.getUser_pass());
         if (result.equals("pass_error") || result.equals("null")) {
             redirectAttributes.addFlashAttribute("errorMessage", result);
             return "redirect:/";
         } else {
-            model.addAttribute("user_id", form.getUser_id());
-            model.addAttribute("user_pass", form.getUser_pass());
-            model.addAttribute("user_name", result);
+            //세션 생성
+            HttpSession session = req.getSession();
+
+            session.setAttribute("user_id", form.getUser_id());
+            session.setAttribute("user_pass", form.getUser_pass());
+            session.setAttribute("user_name", result);
+
             return "main";
         }
+    }
+
+    @GetMapping("/main")
+    public String main() {
+        return "main";
     }
 
     @GetMapping("/signUp")
@@ -40,7 +52,7 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(MemberForm form, RedirectAttributes redirectAttributes, Model model) {
+    public String signUp(MemberForm form, RedirectAttributes redirectAttributes, HttpServletRequest req) throws Exception{
         System.out.println(form.getUser_id());
         if (!(form.getUser_pass()).equals(form.getPass_chk())) {
             redirectAttributes.addFlashAttribute("errorMessage", "pass_error");
@@ -56,15 +68,27 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/signUp";
         }
-        model.addAttribute("user_id", form.getUser_id());
-        model.addAttribute("user_pass", form.getUser_pass());
-        model.addAttribute("user_name", form.getUser_name());
+        //세션 생성
+        HttpSession session = req.getSession();
+
+        session.setAttribute("user_id", form.getUser_id());
+        session.setAttribute("user_pass", form.getUser_pass());
+        session.setAttribute("user_name", form.getUser_name());
         return "main";
     }
 
     @PostMapping("/delete")
-    public String signOut(MemberForm form) {
+    public String signOut(MemberForm form, HttpServletRequest req) {
         memberService.signOut(form.getUser_id());
+
+        HttpSession session = req.getSession();
+        session.invalidate();
+
         return "redirect:/";
+    }
+
+    @GetMapping("/setting")
+    public String setting() {
+        return "/userInfo";
     }
 }
