@@ -37,14 +37,10 @@ public class MemberController {
             session.setAttribute("user_pass", form.getUser_pass());
             session.setAttribute("user_name", result);
 
-            return "main";
+            return "redirect:/main";
         }
     }
 
-    @GetMapping("/main")
-    public String main() {
-        return "main";
-    }
 
     @GetMapping("/signUp")
     public String signUpForm() {
@@ -53,7 +49,6 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public String signUp(MemberForm form, RedirectAttributes redirectAttributes, HttpServletRequest req) throws Exception{
-        System.out.println(form.getUser_id());
         if (!(form.getUser_pass()).equals(form.getPass_chk())) {
             redirectAttributes.addFlashAttribute("errorMessage", "pass_error");
             return "redirect:/signUp";
@@ -74,7 +69,7 @@ public class MemberController {
         session.setAttribute("user_id", form.getUser_id());
         session.setAttribute("user_pass", form.getUser_pass());
         session.setAttribute("user_name", form.getUser_name());
-        return "main";
+        return "redirect:/main";
     }
 
     @PostMapping("/delete")

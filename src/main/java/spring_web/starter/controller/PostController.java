@@ -2,6 +2,7 @@ package spring_web.starter.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import spring_web.starter.domain.Post;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -22,6 +24,12 @@ public class PostController {
         this.postService = postService;
     }
 
+    @GetMapping("/main")
+    public String main(Model model) {
+        List<Post> posts = postService.findPosts();
+        model.addAttribute("posts", posts);
+        return "main";
+    }
 
     @GetMapping("/write")
     public String writeForm() {

@@ -135,79 +135,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th>156</th>
-            <td id="name">testetstsatasetsatesat</td>
-            <td id="writer">aets</td>
-            <td id="date">2016.12.02</td>
-            <td id="view">2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td>testetstsatasetsatesat</td>
-            <td>aets</td>
-            <td>2016.12.02</td>
-            <td>2</td>
-        </tr>
-        </tbody>
-        <tr>
-
+        <tr th:each="post : ${posts}">
+            <th th:text="${post.id}"></th>
+            <td id="name" th:text="${post.title}"></td>
+            <td id="writer" th:text="${post.user_id}"></td>
+            <td id="date" th:text="${post.date}"></td>
+            <td id="view" th:text="${post.view}"></td>
         </tr>
         </tbody>
     </table>
