@@ -72,8 +72,24 @@
             border-bottom: 1px solid #ccc;
         }
 
+        #body_head {
+            height: 10%;
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-        #write {
+        #body_mid {
+            height: 7%;
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .edit {
             font-size: 17px;
             background-color: royalblue;
             border-color : royalblue;
@@ -82,8 +98,13 @@
             width: 100px;
             height: 40px;
             border-radius: 10px;
-            align-self: flex-end;
-            margin-right: 70px;
+            margin-right: 10px;
+        }
+
+        .divide {
+            width: 95%;
+            border-bottom: 0px;
+            margin-top: 0px;
         }
     </style>
 </head>
@@ -96,10 +117,25 @@
     </button>
 </div>
 <div id="container">
-    <h1 style="display: inline-block" th:text = "${post.title}">TITLE</h1>
-    <button id="write" onclick="location.href='/write'">
-        수정하기
-    </button>
+    <div id="body_head">
+        <h1 style="display: inline-block" th:text = "${post.title}">TITLE</h1>
+        <p th:text = "'작성자 : ' + ${post.user_id} + ' | 작성일 : ' + ${post.date} + ' | 조회수 : ' + ${post.view}"></p>
+    </div>
+    <hr class="divide">
+    <div id="body_mid">
+        <button class = "edit" id="list" onclick="location.href='/main'">
+            글 목록
+        </button>
+        <div>
+            <button class = "edit" id="write" onclick="location.href='/write'">
+                수정하기
+            </button>
+            <button class = "edit" id="delete" onclick="location.href='/write'">
+                삭제하기
+            </button>
+        </div>
+    </div>
+    <hr class="divide">
     <p th:text="${post.body}">BODY</p>
 </div>
 </body>
