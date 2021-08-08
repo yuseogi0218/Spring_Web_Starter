@@ -2,7 +2,7 @@
 <html xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>main</title>
+    <title>View</title>
     <style>
         #header {
             background : royalblue;
@@ -71,33 +71,7 @@
             vertical-align: top;
             border-bottom: 1px solid #ccc;
         }
-        #name {
-            width : 1000px;
-            text-align : left;
-            padding-left: 20px;
-        }
-        #writer, #date, #view {
-            width: 100px;
-        }
-        .pagination {
-            display: inline-block;
-        }
 
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-        }
-
-        .pagination a.active {
-            background-color: royalblue;
-            color: white;
-        }
-
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-
-        tbody tr:hover {background-color: #ddd;}
 
         #write {
             font-size: 17px;
@@ -122,40 +96,11 @@
     </button>
 </div>
 <div id="container">
-    <h1 style="display: inline-block">!! Board !!</h1>
+    <h1 style="display: inline-block" th:text = "${post.title}">TITLE</h1>
     <button id="write" onclick="location.href='/write'">
-        Write
+        수정하기
     </button>
-    <table>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>날짜</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}" th:onclick="'location.href=\'' + @{/post/view/?post_id=} + @{${post.id}} + '\''">
-            <th th:text="${post.id}"></th>
-            <td id="name" th:text="${post.title}"></td>
-            <td id="writer" th:text="${post.user_id}"></td>
-            <td id="date" th:text="${post.date}"></td>
-            <td id="view" th:text="${post.view}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
-    </div>
+    <p th:text="${post.body}">BODY</p>
 </div>
 </body>
 </html>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import spring_web.starter.domain.Post;
 import spring_web.starter.service.PostService;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -55,4 +58,12 @@ public class PostController {
         postService.write(post);
         return "redirect:/main";
     }
+
+    @GetMapping("post/view")
+    public String view(@RequestParam Long post_id, Model model) {
+        Post found_post = postService.findById(post_id).get();
+        model.addAttribute("post", found_post);
+        return "post/view";
+    }
+
 }

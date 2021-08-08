@@ -4,6 +4,7 @@ import spring_web.starter.domain.Post;
 import spring_web.starter.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PostService {
 
@@ -20,5 +21,9 @@ public class PostService {
 
     public List<Post> findPosts() {
         return postRepository.findAll();
+    }
+
+    public Optional<Post> findById(Long post_id) {
+        return postRepository.findById(post_id);
     }
 }

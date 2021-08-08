@@ -5,6 +5,7 @@ import spring_web.starter.domain.Post;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 public class JpaPostRepository implements PostRepository{
 
@@ -24,5 +25,13 @@ public class JpaPostRepository implements PostRepository{
     @Override
     public List<Post> findAll() {
         return em.createQuery("select p from Post p", Post.class).getResultList();
+    }
+
+    @Override
+    public Optional<Post> findById(Long id) {
+        List<Post> result = em.createQuery("select p from Post p where p.id = :id", Post.class)
+                .setParameter("id", id)
+                .getResultList();
+        return result.stream().findAny();
     }
 }
