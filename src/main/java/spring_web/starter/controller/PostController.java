@@ -53,6 +53,6 @@ public class PostController {
         post.setView(postForm.getView());
 
         postService.write(post);
-        return "/main";
+        return "redirect:/main";
     }
 }

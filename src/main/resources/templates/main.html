@@ -135,7 +135,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="post : ${posts}">
+        <tr th:each="post : ${posts}" onclick="location.href='/write'">
             <th th:text="${post.id}"></th>
             <td id="name" th:text="${post.title}"></td>
             <td id="writer" th:text="${post.user_id}"></td>
