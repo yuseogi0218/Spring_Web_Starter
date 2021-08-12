@@ -12,4 +12,7 @@ public interface PostRepository {
 
     Optional<Post> findById(Long id);
 
+    void delete(Long id);
+
+    Optional<Post> update(Long id, Post post);
 }

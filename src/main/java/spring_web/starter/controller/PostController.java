@@ -2,6 +2,7 @@ package spring_web.starter.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,4 +67,30 @@ public class PostController {
         return "post/view";
     }
 
+    @Transactional
+    @PostMapping("post/delete")
+    public String delete(@RequestParam("post_id") Long post_id) {
+        postService.delete(post_id);
+        return "redirect:/main";
+    }
+
+    @GetMapping("post/update")
+    public String update(@RequestParam("post_id") Long post_id, Model model) {
+        Post post = postService.findById(post_id).get();
+        model.addAttribute("post", post);
+
+        return "post/updateForm";
+    }
+
+    @Transactional
+    @PostMapping("post/update")
+    public String update(@RequestParam("post_id") Long post_id, PostForm postForm) {
+        Post post = postService.findById(post_id).get();
+        post.setTitle(postForm.getTitle());
+        System.out.println(postForm.getBody());
+        post.setBody(postForm.getBody());
+
+        postService.update(post_id, post);
+        return "redirect:/main";
+    }
 }

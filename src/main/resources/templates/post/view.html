@@ -98,7 +98,7 @@
             width: 100px;
             height: 40px;
             border-radius: 10px;
-            margin-right: 10px;
+            margin-right: 15px;
         }
 
         .divide {
@@ -126,17 +126,19 @@
         <button class = "edit" id="list" onclick="location.href='/main'">
             글 목록
         </button>
-        <div>
-            <button class = "edit" id="write" onclick="location.href='/write'">
+        <div style="display: flex; flex-direction: row" th:if="${post.getUser_id().toString()} == ${session.user_id}">
+            <button class = "edit" id="write" th:onclick="'location.href=\'' + @{/post/update?post_id=} + @{${post.id}} + '\''">
                 수정하기
             </button>
-            <button class = "edit" id="delete" onclick="location.href='/write'">
-                삭제하기
-            </button>
+            <form method="post" th:action="'/post/delete?post_id=' + ${post.id}">
+                <button class = "edit" id="delete" >
+                    삭제하기
+                </button>
+            </form>
         </div>
     </div>
     <hr class="divide">
-    <p th:text="${post.body}">BODY</p>
+    <p style="width: 90%; text-align: start" th:text="${post.body}">BODY</p>
 </div>
 </body>
 </html>

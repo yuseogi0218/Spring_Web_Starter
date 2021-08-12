@@ -1,5 +1,6 @@
 package spring_web.starter.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Member;
@@ -11,8 +12,10 @@ import java.util.Optional;
 @Repository
 public class JpaMemberRepository implements MemberRepository{
 
+
     private final EntityManager em;
 
+    @Autowired
     public JpaMemberRepository(EntityManager em) {
         this.em = em;
     }

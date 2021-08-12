@@ -1,5 +1,6 @@
 package spring_web.starter.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import spring_web.starter.domain.Post;
 import spring_web.starter.repository.PostRepository;
 
@@ -10,6 +11,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
@@ -25,5 +27,13 @@ public class PostService {
 
     public Optional<Post> findById(Long post_id) {
         return postRepository.findById(post_id);
+    }
+
+    public void delete(Long post_id) {
+        postRepository.delete(post_id);
+    }
+
+    public Optional<Post> update(Long post_id, Post post) {
+        return postRepository.update(post_id, post);
     }
 }

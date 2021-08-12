@@ -1,5 +1,7 @@
 package spring_web.starter.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Post;
 
@@ -11,6 +13,7 @@ public class JpaPostRepository implements PostRepository{
 
     private final EntityManager em;
 
+    @Autowired
     public JpaPostRepository(EntityManager em) {
         this.em = em;
     }
@@ -33,5 +36,30 @@ public class JpaPostRepository implements PostRepository{
                 .setParameter("id", id)
                 .getResultList();
         return result.stream().findAny();
+    }
+
+
+    @Override
+    public void delete(Long id) {
+        em.createQuery("delete from Post p where p.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    public Optional<Post> update(Long id, Post post) {
+        String get_post_title = post.getTitle();
+        String get_post_body = post.getBody();
+
+        em.createQuery("update Post p set p.title = :get_post_title, p.body = :get_post_body where p.id = :id")
+                .setParameter("id", id)
+                .setParameter("get_post_body", get_post_body)
+                .setParameter("get_post_title", get_post_title)
+                .executeUpdate();
+
+        Optional<Post> founded_post = findById(id);
+        return founded_post;
     }
 }

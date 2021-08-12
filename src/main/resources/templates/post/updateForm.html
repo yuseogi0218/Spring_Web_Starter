@@ -2,7 +2,7 @@
 <html xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>main</title>
+    <title>Update</title>
     <style>
         #header {
             background : royalblue;
@@ -71,35 +71,25 @@
             vertical-align: top;
             border-bottom: 1px solid #ccc;
         }
-        #name {
-            width : 1000px;
-            text-align : left;
-            padding-left: 20px;
-        }
-        #writer, #date, #view {
-            width: 100px;
-        }
-        .pagination {
-            display: inline-block;
+
+        #body_head {
+            height: 10%;
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
+        #body_mid {
+            height: 7%;
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
         }
-
-        .pagination a.active {
-            background-color: royalblue;
-            color: white;
-        }
-
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-
-        tbody tr:hover {background-color: #ddd;}
-
-        #write {
+        .edit {
             font-size: 17px;
             background-color: royalblue;
             border-color : royalblue;
@@ -108,8 +98,19 @@
             width: 100px;
             height: 40px;
             border-radius: 10px;
-            align-self: flex-end;
-            margin-right: 70px;
+            margin-right: 15px;
+        }
+
+        .divide {
+            width: 95%;
+            border-bottom: 0px;
+            margin-top: 0px;
+
+        }
+
+        #body {
+            width: 900px;
+            height: 500px;
         }
     </style>
 </head>
@@ -122,40 +123,28 @@
     </button>
 </div>
 <div id="container">
-    <h1 style="display: inline-block">!! Board !!</h1>
-    <button id="write" onclick="location.href='/write'">
-        Write
-    </button>
-    <table>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>날짜</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}" th:onclick="'location.href=\'' + @{/post/view?post_id=} + @{${post.id}} + '\''">
-            <th th:text="${postStat.count}"></th>
-            <td id="name" th:text="${post.title}"></td>
-            <td id="writer" th:text="${post.user_id}"></td>
-            <td id="date" th:text="${post.date}"></td>
-            <td id="view" th:text="${post.view}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+    <form id="postForm" method="post" th:action="'/post/update?post_id=' + @{${post.id}}">
+    <div id="body_head">
+        <input id="title" name="title" type="text" style="display: inline-block; font-size: 2em; font-weight: bold;" th:value="${post.title}" required>
+        <p th:text = "'작성자 : ' + ${post.user_id} + ' | 작성일 : ' + ${post.date} + ' | 조회수 : ' + ${post.view}"></p>
     </div>
+    <hr class="divide" >
+    <div id="body_mid">
+        <button class = "edit" id="list" onclick="location.href='/main'">
+            글 목록
+        </button>
+        <div style="display: flex; flex-direction: row" th:if="${post.getUser_id().toString()} == ${session.user_id}">
+            <button class = "edit" id="write" type="submit">
+                수정완료
+            </button>
+                <button class = "edit" id="delete" th:method="post" th:onclick="'/post/delete?post_id=' + ${post.id}">
+                    삭제하기
+                </button>
+        </div>
+    </div>
+    <hr class="divide">
+        <textarea id="body" name="body" th:text="${post.body}" required ></textarea>
+    </form>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package spring_web.starter.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Member;
 import spring_web.starter.repository.MemberRepository;
@@ -10,6 +11,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
