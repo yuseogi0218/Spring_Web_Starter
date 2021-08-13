@@ -36,4 +36,16 @@ public class PostService {
     public Optional<Post> update(Long post_id, Post post) {
         return postRepository.update(post_id, post);
     }
+
+    public int findAllCnt() {
+        return postRepository.findAllCnt();
+    }
+
+    public List<Post> findListPaging(int startIndex, int pageSize) {
+        return postRepository.findListPaging(startIndex, pageSize);
+    }
+
+    public void view(Long post_id) {
+        postRepository.view(post_id);
+    }
 }

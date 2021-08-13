@@ -81,6 +81,8 @@
         }
         .pagination {
             display: inline-block;
+            display: flex;
+            flex-direction: row;
         }
 
         .pagination a {
@@ -138,7 +140,7 @@
         </thead>
         <tbody>
         <tr th:each="post : ${posts}" th:onclick="'location.href=\'' + @{/post/view?post_id=} + @{${post.id}} + '\''">
-            <th th:text="${postStat.count}"></th>
+            <th th:text="(${pagination.page}-1)*10+${postStat.count}"></th>
             <td id="name" th:text="${post.title}"></td>
             <td id="writer" th:text="${post.user_id}"></td>
             <td id="date" th:text="${post.date}"></td>
@@ -146,15 +148,21 @@
         </tr>
         </tbody>
     </table>
+
+<!--paging button-->
     <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <a th:href="@{main?page=1}">&laquo;</a>
+        <a th:href="@{main?page={page} (page=${pagination.prevBlock})}">&lt;</a>
+        <th:block th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+            <li
+                style="list-style:none;"
+                th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                    <a th:classappend="${pagination.page} == ${pageButton} ? active" th:href="@{main?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+            </li>
+        </th:block>
+        <a th:href="@{main?page={page} (page=${pagination.nextBlock})}">&gt;</a>
+        <a th:href="@{main?page={page} (page=${pagination.totalPageCnt})}">&raquo;</a>
     </div>
 </div>
 </body>

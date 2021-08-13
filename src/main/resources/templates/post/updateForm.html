@@ -125,7 +125,7 @@
 <div id="container">
     <form id="postForm" method="post" th:action="'/post/update?post_id=' + @{${post.id}}">
     <div id="body_head">
-        <input id="title" name="title" type="text" style="display: inline-block; font-size: 2em; font-weight: bold;" th:value="${post.title}" required>
+        <input  id="title" name="title" type="text" style="width:40%;display: inline-block; font-size: 2em; font-weight: bold;" th:value="${post.title}" required>
         <p th:text = "'작성자 : ' + ${post.user_id} + ' | 작성일 : ' + ${post.date} + ' | 조회수 : ' + ${post.view}"></p>
     </div>
     <hr class="divide" >

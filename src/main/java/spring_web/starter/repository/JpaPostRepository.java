@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Post;
 
 import javax.persistence.EntityManager;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,20 @@ public class JpaPostRepository implements PostRepository{
     @Autowired
     public JpaPostRepository(EntityManager em) {
         this.em = em;
+    }
+
+    @Override
+    public int findAllCnt() {
+        return ((Number) em.createQuery("select count(p) from Post p")
+                .getSingleResult()).intValue();
+    }
+
+    @Override
+    public List<Post> findListPaging(int startIndex, int pageSize) {
+        return em.createQuery("select p from Post p ORDER BY p.id DESC", Post.class)
+                .setFirstResult(startIndex)
+                .setMaxResults(pageSize)
+                .getResultList();
     }
 
     @Transactional
@@ -62,4 +78,14 @@ public class JpaPostRepository implements PostRepository{
         Optional<Post> founded_post = findById(id);
         return founded_post;
     }
+
+    @Override
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    public void view(Long id) {
+        em.createQuery("update Post p set p.view = p.view+1 where p.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
 }

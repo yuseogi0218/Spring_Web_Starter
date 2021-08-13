@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import spring_web.starter.Pagination;
 import spring_web.starter.domain.Post;
 import spring_web.starter.service.PostService;
 
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -29,9 +28,24 @@ public class PostController {
     }
 
     @GetMapping("/main")
-    public String main(Model model) {
-        List<Post> posts = postService.findPosts();
+    public String main(Model model, @RequestParam(defaultValue = "1") int page) {
+
+        // 총 게시물 수
+        int totalListCnt = postService.findAllCnt();
+
+        // 생성 인자로 총 게시물 수, 현재 페이지를 전달
+        Pagination pagination = new Pagination(page,totalListCnt);
+
+        // DB select start index
+        int startIndex = pagination.getStartIndex();
+        // 페이지 당 보여지는 게시글의 최대 개수
+        int pageSize = pagination.getPageSize();
+
+        List<Post> posts = postService.findListPaging(startIndex, pageSize);
+
+
         model.addAttribute("posts", posts);
+        model.addAttribute("pagination", pagination);
         return "main";
     }
 
@@ -60,8 +74,10 @@ public class PostController {
         return "redirect:/main";
     }
 
+    @Transactional
     @GetMapping("post/view")
     public String view(@RequestParam Long post_id, Model model) {
+        postService.view(post_id);
         Post found_post = postService.findById(post_id).get();
         model.addAttribute("post", found_post);
         return "post/view";
@@ -87,7 +103,6 @@ public class PostController {
     public String update(@RequestParam("post_id") Long post_id, PostForm postForm) {
         Post post = postService.findById(post_id).get();
         post.setTitle(postForm.getTitle());
-        System.out.println(postForm.getBody());
         post.setBody(postForm.getBody());
 
         postService.update(post_id, post);
