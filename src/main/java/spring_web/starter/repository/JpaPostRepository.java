@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import spring_web.starter.domain.Post;
 
 import javax.persistence.EntityManager;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

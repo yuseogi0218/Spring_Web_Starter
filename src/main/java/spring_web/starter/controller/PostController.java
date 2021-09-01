@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import spring_web.starter.Pagination;
 import spring_web.starter.domain.Post;
 import spring_web.starter.service.PostService;
@@ -34,7 +35,7 @@ public class PostController {
         int totalListCnt = postService.findAllCnt();
 
         // 생성 인자로 총 게시물 수, 현재 페이지를 전달
-        Pagination pagination = new Pagination(page,totalListCnt);
+        Pagination pagination = new Pagination(page, totalListCnt);
 
         // DB select start index
         int startIndex = pagination.getStartIndex();
@@ -108,4 +109,5 @@ public class PostController {
         postService.update(post_id, post);
         return "redirect:/main";
     }
+
 }
