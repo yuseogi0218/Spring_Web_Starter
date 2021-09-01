@@ -23,9 +23,14 @@ ___
   - Client
     - 회원 정보
       - 회원가입 / 로그인 / 회원 정보 수정 / 회원 탈퇴
+    - 게시글
+      - 게시글 작성 / 수정 / 삭제 / pagination
 ___
-- ### 프로젝트 구조 <a id="structure"></a> 
-  - 클래스 다이어그램 추가
+- ### 프로젝트 구조 <a id="structure"></a>
+![](structure.png)
 ___
 - ### 화면<a id="screen"></a> 
-  - 기능 별 예시 화면 보여주기
+  - 메인 화면
+![](board.png)
+  - 게시글 작성
+![](write.png)
